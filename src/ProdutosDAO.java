@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
 /**
  *
@@ -22,16 +18,31 @@ public class ProdutosDAO {
     ResultSet resultset;
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
-    public void cadastrarProduto (ProdutosDTO produto){
-        
-        
-        //conn = new conectaDAO().connectDB();
-        
-        
+    public ProdutosDAO(){
+        conectaDAO dao = new conectaDAO();
+        conn = dao.connectDB();
     }
+        
+        public boolean cadastrarProduto(ProdutosDTO produtos){
+        String sql = "INSERT INTO produtos(nome, valor, status) VALUES " + "(?,?,?)";
+        try{
+            prep = this.conn.prepareStatement(sql);
+            prep.setString(1, produtos.getNome());
+            prep.setInt(2, produtos.getValor());
+            prep.setString(3, produtos.getStatus());
+            prep.execute();
+            
+            return true ;
+        } catch (Exception e){
+            System.out.println("ERRO: " + e.getMessage());
+            return false;
+        }
+    }
+        
     
     public ArrayList<ProdutosDTO> listarProdutos(){
         
+
         return listagem;
     }
     
