@@ -67,7 +67,22 @@ public class ProdutosDAO {
         return listagem;
     }
     
-    
+    public boolean venderProduto(int id){
+        String sql = "UPDATE produtos SET status = ? WHERE id = ?";
+        
+        try {
+            prep = this.conn.prepareStatement(sql);
+            prep.setString(1, "Vendido");
+            prep.setInt(2, id);
+            
+            prep.executeUpdate();
+            
+            return true;
+        } catch (Exception e){
+            System.out.println("ERRO: " + e.getMessage());
+            return false;
+        }
+    }
     
         
 }
